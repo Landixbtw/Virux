@@ -1,0 +1,17 @@
+version: "3"
+services:
+  littlehelper:
+    build:
+      context: /home/rocky/DBB/src
+
+  reviewbot:
+    build:
+      context: /home/rocky/ReviewBot/src
+
+  warnbot:
+    build:
+      context: /home/rocky/WarnBot/src
+
+  Virux:
+    build:
+      context: /home/rocky/Virux/src
