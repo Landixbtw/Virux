@@ -44,7 +44,7 @@ Nachdem die Bewerbung erfolgreich abgeschickt wurde, bekommt der Bewerber eine B
 
 ![Example on how it looks after a successfull application](./pictures/successfull_application.png)
 
-<h6>Bewerbung für das Team im Bewerbungschannel</h6> <br>
+Bewerbung für das Team im Bewerbungschannel<br>
 
 ![Application for the server team in the application channel](./pictures/application_for_team.png)
 
