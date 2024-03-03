@@ -2,7 +2,7 @@
 
 # Commissioned bot by Virux_eSports, with following features requested. <br/>
 
-➡️l Embed Nachrichten mit dem prefix "!" <br>
+➡️lEmbed Nachrichten mit dem prefix "!" <br>
 ➡️ Willkommensnachricht: Welcome! \n Lies dir bitte die #regeln durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, "#Bewerbung" <br>
 ➡️ Bewerbungssystem: <br>
 
@@ -18,6 +18,6 @@
 
   Vielen Dank und einen schönen Tag!<br>
 
-➡️ Join to create voice Channel --> Wenn jemand in den join_to_create Voice Channel soll ein eigener Temporärer Voice Channel erstellt werden.<br>
+➡️ Join to create voice Channel → Wenn jemand in den join_to_create Voice Channel soll ein eigener Temporärer Voice Channel erstellt werden.<br>
 ➡️ Link von Content Creatorn in den 🔔┃social-media-update posten<br>
 ➡️ Ticket Tool <br>
