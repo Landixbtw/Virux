@@ -1,40 +1,36 @@
-# TODO: eine liste in der DB die alle streamer speichert. 
-# TODO: Eine möglichkeit die streamer zu löschen
-# TODO: Einbindung der twitch api
-
-channelName = []
-
-contents = requests.get(f'https://www.twitch.tv/'+ {channelName}).content.decode('utf-8')
-
-if 'isLiveBroadcast' in contents: 
-    print(channelName + ' is live')
-else:
-    print(channelName + ' is not live')
-
-
 import discord
 from discord.ext import commands
-from discord import ui, app_commands
-import requests
-import mariadb
+from discord import app_commands
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
-
-class virux_live_checker(commands.Cog):
+class StreamerManagement(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @app_commands.command(name="embed", description="Mache ein Embed")
-    @app_commands.default_permissions(administrator=True)
-    @app_commands.describe(add_streamer="Which streamer would you like to add ?") # TODO: username ? or Link what input
-    async def virux_live_checker(self, interaction: discord.Interaction):
-       pass
+    @app_commands.command(name="add_streamer", description="Add a streamer to the list.")
+    @app_commands.describe(streamer_name="The name of the streamer to add.")
+    async def add_streamer(self, interaction: discord.Interaction, streamer_name: str):
+        # Logic to add the streamer
+        await interaction.response.send_message(f"Streamer {streamer_name} added to the list.")
 
+    @app_commands.command(name="remove_streamer", description="Remove a streamer from the list.")
+    @app_commands.describe(streamer_name="The name of the streamer to remove.")
+    async def remove_streamer(self, interaction: discord.Interaction, streamer_name: str):
+        # Logic to remove the streamer
+        await interaction.response.send_message(f"Streamer {streamer_name} removed from the list.")
 
+    @app_commands.command(name="add_phrase", description="Add a phrase to the announcements.")
+    @app_commands.describe(phrase="The phrase to add.")
+    async def add_phrase(self, interaction: discord.Interaction, phrase: str):
+        # Logic to add the phrase
+        await interaction.response.send_message(f"Phrase '{phrase}' added to the announcements.")
 
-
+    @app_commands.command(name="remove_phrase", description="Remove a phrase from the announcements.")
+    @app_commands.describe(phrase="The phrase to remove.")
+    async def remove_phrase(self, interaction: discord.Interaction, phrase: str):
+        # Logic to remove the phrase
+        await interaction.response.send_message(f"Phrase '{phrase}' removed from the announcements.")
 
 async def setup(bot):
-    await bot.add_cog(virux_live_checker(bot))
-    print("virux_live_checker cog geladen ✔️")
+    await bot.add_cog(StreamerManagement(bot))
+    print("Streamer Management cog loaded ✔️")
 

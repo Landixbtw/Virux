@@ -1,14 +1,14 @@
 import discord
+from discord import ui
 from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import logging
 import mariadb
 import sys 
-import aiohttp
-import re
 
 from helpcommand import MyHelp
+
 
 load_dotenv()
 token = str(os.getenv("TOKEN"))
@@ -83,71 +83,50 @@ cur = con.cursor()
 
 bot = bot()
 
+class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSports"):
 
-# WARNING: !!!!!!!!!!!!!!
+    answer_team = ui.TextInput(label="Für welches Team möchtest du dich bewerben ?", style=discord.TextStyle.long, placeholder="Fortnite/Valorant/CoD", required=True, max_length=15)
+    answer_rules = ui.TextInput(label="Hast du dir unsere Regeln durchgelesen ?", style=discord.TextStyle.short, placeholder="Ja", default="Nein", required=True, max_length=5)
+    answer_age = ui.TextInput(label="Wie alt bist du", style=discord.TextStyle.short, placeholder="Alter", required=True, max_length=3)
+    answer_attention = ui.TextInput(label="Wie bist du auf uns aufmerksam geworden ?", style=discord.TextStyle.long, placeholder="Instagram/TikTok/Twitch/YouTube/Twitch/YouTube", max_length=150)
+    #answer_goals = ui.TextInput(label="Hast du Ziele? Wenn ja, welche ?", style=discord.TextStyle.long, max_length=200)
+    #answer_why_us = ui.TextInput(label="Was erhoffst du dir bei uns ?", style=discord.TextStyle.long, required=True, max_length=200)
+    answer_gamer_tag = ui.TextInput(label="Epic/Valorant/CoD Name & Tracker", style=discord.TextStyle.long, placeholder="Epic/Valorant/CoD Name & Tracker", required=True, max_length=20)
 
-# NOTE: This is the Embed prefix command
+    async def on_submit(self, interaction: discord.Interaction):
+        guild = interaction.guild
+        apply_channel = discord.utils.get(guild.text_channels, name="bewerbungen")
+        
+        # Construct the message from the modal's input fields
+        embed = discord.Embed(title=f"Bewerber: {interaction.user.name} UserID: {interaction.user.id}")
+        embed.add_field(name="Für welches Team möchtest du dich Bewerben ?:", value=f"**{self.answer_team}**", inline=False)
+        embed.add_field(name="Hast du dir die Regeln durchgelesen ?:", value=f"**{self.answer_rules}**", inline=False)
+        embed.add_field(name="Wie alt bist du ?:", value=f"**{self.answer_age}**", inline=False)
+        embed.add_field(name="Wie bist du auf uns aufmerksam geworden ?:", value=f"**{self.answer_attention}**", inline=False)
+        embed.add_field(name="Epic/Valorant/CoD Name, evtl. Fortnite Tracker, Valorant Tracker, CoD Tracker:", value=f"**{self.answer_gamer_tag}**", inline=False)
+        
+        # Check if the 'bewerbungen' channel was found
+        if apply_channel:
+            # Send the constructed message to the 'bewerbungen' channel
+            await apply_channel.send(embed=embed)
+            
+            # Acknowledge the interaction
+            await interaction.response.send_message("Deine Bewerbung wurde eingereicht, Viel Glück!", ephemeral=True)
+        else:
+            # In case the 'bewerbungen' channel is not found, send a response to the user
+            await interaction.response.send_message(f"Error: Application Channel could not be found. Please Create a channel called [bewerbungen], or make sure the bot has access to the existin one.")
 
-async def get_image_size(url):
-    async with aiohttp.ClientSession() as session:
-        async with session.head(url) as response:
-            if response.status == 200:  # Check if the request was successful
-                size = response.headers.get('Content-Length')
-                return int(size) if size else 0
-            else:
-                return 0  # In case the request fails, return 0 as the size
+class SimpleView(discord.ui.View):
+    @discord.ui.button(label="apply", style=discord.ButtonStyle.success)
+    async def hello(self, interaction: discord.Interaction, button: discord.ui.Button):
+        modal = ApplicationModal()
+        await interaction.response.send_modal(modal)
 
-# Your existing create_embed command here, which now includes the get_image_size function
 @bot.command()
-async def create_embed(ctx, author: str, body: str, *image_urls: str, thumbnail_url: str = None):
-    url_regex = re.compile(
-        r'^(?:http|ftp)s?://'  # http:// or https://
-        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)'  # domain...
-        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
-
-    if len(image_urls) > 4:
-        await ctx.send("Error: You can provide a maximum of 4 images.")
-        return
-
-    if thumbnail_url and not re.match(url_regex, thumbnail_url):
-        await ctx.send("Error: The provided thumbnail URL is invalid.")
-        return
-
-    for url in image_urls:
-        if not re.match(url_regex, url):
-            await ctx.send(f"Error: The provided image URL '{url}' is invalid.")
-            return
-
-    async def get_image_sizes(image_urls):
-        sizes = []
-        for url in image_urls:
-            size = await get_image_size(url)
-            sizes.append(size)
-        return sizes
-
-    # Get the sizes asynchronously and then sum them
-    sizes = await get_image_sizes(image_urls)
-    total_size = sum(sizes)
-    
-    if total_size > 25 * 1024 * 1024:  # 25 MB in bytes
-        await ctx.send("Error: The combined size of the images exceeds 25MB.")
-        return
-
-    embed = discord.Embed(title=author, description=body, color=discord.Color.blue())
-    for url in image_urls:
-        embed.add_image(url=url)
-
-    if thumbnail_url:
-        embed.set_thumbnail(url=thumbnail_url)
-
-    await ctx.send(embed=embed)
-    
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandError):
-        await ctx.send(f'An error occurred: {str(error)}')
-
-#WARNING: !!!!!!!!!!!!!!!!!!
+async def button(ctx):
+    view = SimpleView()
+    #view.add_item(button)
+    await ctx.send(view=view)
 
 rules_keywords = ["rules", "regeln", "┃regeln", "⚖-rules", ]
 welcome_keyword = ["welcome", "willkommen", "👋🏼｜welcome"]
