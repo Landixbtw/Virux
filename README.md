@@ -26,4 +26,4 @@ Commissioned bot by Virux_eSports, with following features requested. <br>
 
 <Join to create voice Channel> Dafür muss ein Voice Channel vorhanden sein der, <code>join_for_voice</code> heißt. <br>
 Sobald jemand in den Voice Channel joint, wird in der Selben Kategorie, ein Channel mit dem Tag der Person erstellt.
-Z.b. [example displaying the created channel](https://imgur.com/a/NjrX0q3)
+Z.b. ![example displaying the created channel](https://imgur.com/a/NjrX0q3)

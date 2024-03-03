@@ -5,6 +5,8 @@ import os
 import logging
 import mariadb
 import sys 
+import aiohttp
+import re
 
 from helpcommand import MyHelp
 
@@ -17,7 +19,7 @@ bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 class bot(commands.Bot):
     def __init__(self,):
-        super().__init__(command_prefix="<", intents=discord.Intents.all())
+        super().__init__(command_prefix="!", intents=discord.Intents.all())
 
  #   bot.load_extension("embed_command")
 
@@ -79,12 +81,73 @@ except mariadb.Error as mariaErr:
 
 cur = con.cursor()
 
-
 bot = bot()
 
 
+# WARNING: !!!!!!!!!!!!!!
 
+# NOTE: This is the Embed prefix command
 
+async def get_image_size(url):
+    async with aiohttp.ClientSession() as session:
+        async with session.head(url) as response:
+            if response.status == 200:  # Check if the request was successful
+                size = response.headers.get('Content-Length')
+                return int(size) if size else 0
+            else:
+                return 0  # In case the request fails, return 0 as the size
+
+# Your existing create_embed command here, which now includes the get_image_size function
+@bot.command()
+async def create_embed(ctx, author: str, body: str, *image_urls: str, thumbnail_url: str = None):
+    url_regex = re.compile(
+        r'^(?:http|ftp)s?://'  # http:// or https://
+        r'(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)'  # domain...
+        r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+    if len(image_urls) > 4:
+        await ctx.send("Error: You can provide a maximum of 4 images.")
+        return
+
+    if thumbnail_url and not re.match(url_regex, thumbnail_url):
+        await ctx.send("Error: The provided thumbnail URL is invalid.")
+        return
+
+    for url in image_urls:
+        if not re.match(url_regex, url):
+            await ctx.send(f"Error: The provided image URL '{url}' is invalid.")
+            return
+
+    async def get_image_sizes(image_urls):
+        sizes = []
+        for url in image_urls:
+            size = await get_image_size(url)
+            sizes.append(size)
+        return sizes
+
+    # Get the sizes asynchronously and then sum them
+    sizes = await get_image_sizes(image_urls)
+    total_size = sum(sizes)
+    
+    if total_size > 25 * 1024 * 1024:  # 25 MB in bytes
+        await ctx.send("Error: The combined size of the images exceeds 25MB.")
+        return
+
+    embed = discord.Embed(title=author, description=body, color=discord.Color.blue())
+    for url in image_urls:
+        embed.add_image(url=url)
+
+    if thumbnail_url:
+        embed.set_thumbnail(url=thumbnail_url)
+
+    await ctx.send(embed=embed)
+    
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandError):
+        await ctx.send(f'An error occurred: {str(error)}')
+
+#WARNING: !!!!!!!!!!!!!!!!!!
 
 rules_keywords = ["rules", "regeln", "┃regeln", "⚖-rules", ]
 welcome_keyword = ["welcome", "willkommen", "👋🏼｜welcome"]
