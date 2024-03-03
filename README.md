@@ -1,6 +1,6 @@
 # Virux
 
-# Commissioned bot by Virux_eSports, with following features requested. <br/>
+# Commissioned bot by Virux_eSports, with following features requested. <br>
 
 ➡️lEmbed Nachrichten mit dem prefix "!" <br>
 ➡️ Willkommensnachricht: Welcome! \n Lies dir bitte die #regeln durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, "#Bewerbung" <br>
