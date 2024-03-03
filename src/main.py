@@ -214,41 +214,6 @@ async def on_voice_state_update(member, before, after):
             await before.channel.delete(reason="Automatic deletion after member left")
             del member_channels[before.channel.id]  # Remove the channel from the tracking dictionary
 
-# NOTE: Twitch Notifications
-#
-
-def get_twitch_oauth_token(client_id, client_secret):
-    url = 'https://id.twitch.tv/oauth2/token'
-    body = {
-        "8co45hhyjmp97xirpltqwsvze1n1k8": client_id,
-        "n430d0azi01au64iqxqe8svfybvmg2": client_secret,
-        'grant_type': 'client_credentials'
-    }
-    response = requests.post(url, params=body)
-    return response.json()['access_token']
-
-# Twitch API setup
-CLIENT_ID = "8co45hhyjmp97xirpltqwsvze1n1k8"
-CLIENT_SECRET = 'YOUR_TWITCH_CLIENT_SECRET'
-OAUTH_TOKEN = get_twitch_oauth_token(CLIENT_ID, CLIENT_SECRET)
-STREAMERS = ['streamer1', 'streamer2']  # List of streamers you want to track
-
-async def check_streamers():
-    await bot.wait_until_ready()
-    channel = bot.get_channel(YOUR_DISCORD_CHANNEL_ID)  # Replace with your Discord channel ID
-    while not bot.is_closed():
-        headers = {
-            'Client-ID': CLIENT_ID,
-            'Authorization': f'Bearer {OAUTH_TOKEN}'
-        }
-        for streamer in STREAMERS:
-            response = requests.get(f'https://api.twitch.tv/helix/streams?user_login={streamer}', headers=headers)
-            data = response.json()
-            if data['data']:
-                await channel.send(f"{streamer} is now live on Twitch! https://twitch.tv/{streamer}")
-        await asyncio.sleep(300)  # Wait for 5 minutes before checking again
-
-
 bot.help_command = MyHelp()
 
 bot.run(token)
