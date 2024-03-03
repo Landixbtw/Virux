@@ -89,11 +89,9 @@ bot = bot()
 class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSports"):
 
     answer_team = ui.TextInput(label="Für welches Team möchtest du dich bewerben ?", style=discord.TextStyle.long, placeholder="Fortnite/Valorant/CoD", required=True, max_length=15)
-    answer_rules = ui.TextInput(label="Hast du dir unsere Regeln durchgelesen ?", style=discord.TextStyle.short, placeholder="Ja", default="Nein", required=True, max_length=5)
     answer_age = ui.TextInput(label="Wie alt bist du", style=discord.TextStyle.short, placeholder="Alter", required=True, max_length=3)
-    answer_attention = ui.TextInput(label="Wie bist du auf uns aufmerksam geworden ?", style=discord.TextStyle.long, placeholder="Instagram/TikTok/Twitch/YouTube/Twitch/YouTube", max_length=150)
-    #answer_goals = ui.TextInput(label="Hast du Ziele? Wenn ja, welche ?", style=discord.TextStyle.long, max_length=200)
-    #answer_why_us = ui.TextInput(label="Was erhoffst du dir bei uns ?", style=discord.TextStyle.long, required=True, max_length=200)
+    answer_goals = ui.TextInput(label="Hast du Ziele? Wenn ja, welche ?", style=discord.TextStyle.long, max_length=200)
+    answer_why_us = ui.TextInput(label="Was erhoffst du dir bei uns ?", style=discord.TextStyle.long, required=True, max_length=200)
     answer_gamer_tag = ui.TextInput(label="Epic/Valorant/CoD Name & Tracker", style=discord.TextStyle.long, placeholder="Epic/Valorant/CoD Name & Tracker", required=True, max_length=20)
 
     async def on_submit(self, interaction: discord.Interaction):
@@ -103,9 +101,9 @@ class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSpo
         # Construct the message from the modal's input fields
         embed = discord.Embed(title=f"Bewerber: {interaction.user.name} UserID: {interaction.user.id}")
         embed.add_field(name="Für welches Team möchtest du dich Bewerben ?:", value=f"**{self.answer_team}**", inline=False)
-        embed.add_field(name="Hast du dir die Regeln durchgelesen ?:", value=f"**{self.answer_rules}**", inline=False)
         embed.add_field(name="Wie alt bist du ?:", value=f"**{self.answer_age}**", inline=False)
-        embed.add_field(name="Wie bist du auf uns aufmerksam geworden ?:", value=f"**{self.answer_attention}**", inline=False)
+        embed.add_field(name="Wie bist du auf uns aufmerksam geworden ?:", value=f"**{self.answer_goals}**", inline=False)
+        embed.add_field(name="Was erhoffst du dir bei uns ?", value=f"**{self.answer_why_us}**", inline=False)
         embed.add_field(name="Epic/Valorant/CoD Name, evtl. Fortnite Tracker, Valorant Tracker, CoD Tracker:", value=f"**{self.answer_gamer_tag}**", inline=False)
         
         # Check if the 'bewerbungen' channel was found
