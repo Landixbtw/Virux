@@ -129,6 +129,7 @@ async def button(ctx):
     #view.add_item(button)
     await ctx.send(view=view)
 
+"""
 rules_keywords = ["rules", "regeln", "┃regeln", "⚖-rules", ]
 welcome_keyword = ["welcome", "willkommen", "👋🏼｜welcome"]
 
@@ -184,6 +185,7 @@ async def on_member_join(member: discord.Member):
     else:
         print("welcome channel not found in the specified guild. Check channel name, permissions, and asynchronous behavior.")
 
+"""
 
 # Dictionary to store channels created for members
 member_channels = {}
