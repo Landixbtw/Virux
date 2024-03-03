@@ -25,5 +25,10 @@ Commissioned bot by Virux_eSports, with following features requested. <br>
 ## Using the Bot
 
 <Join to create voice Channel> Dafür muss ein Voice Channel vorhanden sein der, <code>join_for_voice</code> heißt. <br>
-Sobald jemand in den Voice Channel joint, wird in der Selben Kategorie, ein Channel mit dem Tag der Person erstellt.
-Z.b. ![example for created channel](./pictures/ZyjjUCD.png)
+Sobald jemand in den Voice Channel joint, wird in der Selben Kategorie, ein Channel mit dem Tag der Person erstellt.Z.b. <br>
+![example for created channel](./pictures/ZyjjUCD.png)
+<br>
+Sobald der ersteller der Channels diesen verlässt, wird der Channel gelöscht. <br>
+In den Audit-Logs ist das dann so zu sehen. <br>
+![example in audit_logs one](./pictures/audit_log_example_1.png)
+![example in audit_logs two](./pictures/audit_log_example_2.png)
