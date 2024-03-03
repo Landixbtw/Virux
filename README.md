@@ -18,7 +18,7 @@ Commissioned bot by Virux_eSports, with following features requested. <br>
   Vielen Dank und einen schönen Tag!<br>
 
 ➡️ [x]Join to create voice Channel → Wenn jemand in den join_to_create Voice Channel soll ein eigener Temporärer Voice Channel erstellt werden.<br>
-➡️ []Link von Content Creatorn in den 🔔┃social-media-update posten<br>
+➡️ ⏳[]Link von Content Creatorn in den 🔔┃social-media-update posten<br>
 
 ➡️ [x]Anleitung für Discohook
 
