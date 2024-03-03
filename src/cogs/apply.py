@@ -1,35 +1,43 @@
-# Slash Command for application.
-
 import discord
 from discord.ext import commands
-from discord import app_commands
-import datetime
-import logging
+from discord import ButtonStyle, ui, app_commands
 
-bot = commands.Bot(command_prefix="<", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
-class apply(commands.Cog):
+    
+class ApplyButton(discord.ui.Button):
+    def __init__(self, *args, **kwargs):
+        # Initialize the button with predefined style, label, and emoji
+        super().__init__(style=discord.ButtonStyle.secondary, label="Apply", emoji="📝", *args, **kwargs)
+
+
+        async def callback(self, interaction: discord.Interaction):
+        # This method is called when the button is clicked.
+        # You can respond to the click in various ways, such as sending a message.
+            await interaction.response.send_message("You clicked the apply button!", ephemeral=True)
+
+class MyView(discord.ui.View):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add the ApplyButton to this view
+        self.add_item(ApplyButton())
+
+class setup_apply(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @app_commands.command(name="Bewerbung", description="Bewerbe dich bei uns!")
-    @app_commands.describe(Alter="Wie alt bist du? ")
-    @app_commands.describe(Spiel="Für welches Spiel willst du dich bewerben? ")
-    @app_commands.describe(Rank="Welcher Rank/Elo bist du? ")
-
-    async def apply(self, interaction: discord.Interaction, Alter: str, Spiel: str, Rank: str):
-    
-        now = datetime.datetime.now()
-        current_time = now.strftime('%H:%M:%S')
-        nummer = 0;
-        nummer++:
+    @app_commands.command(name="setup_apply", description="Mache ein Embed")
+    @app_commands.default_permissions(administrator=True)
+    @app_commands.describe(apply_channel="In what channel would you like people to apply")
+    async def ticket_system_setup(self, interaction: discord.Interaction, apply_channel: discord.TextChannel):
+        pass
         
-        try:
-            embed = discord.Embed(title=f"Bewerbung von {interaction.user.name}", description="")
-            embed.set_author(name=f"Bewerbung #{nummer}", url=f"{interaction.user.global_name}", icon_url="")
-            embed.add_field(name="**Alter:** ", value=f"{Alter}", inline=False)
-            embed.add_field(name="**Spiel:** ", value=f"{Spiel}", inline=False)
-            embed.add_field(name="**Rank:** ",  value=f"{Rank}", inline=False)
-            
-            await interaction.response.send_message("Deine Bewerbung wurde eingereicht. Es wird sich jemand bei dir melden.")
-            # TODO: Bot schickt die Bewerbung in einen Channel ?
+        if not apply_channel:
+            await interaction.response.send_message(f"The channel {apply_channel} does not exists")
+        
+        if apply_channel:
+            await interaction.response.send_message("Click the button to apply", view=MyView())
+
+async def setup(bot):
+    await bot.add_cog(setup_apply(bot))
+    print("apply cog geladen ✔️")
