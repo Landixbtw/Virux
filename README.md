@@ -21,3 +21,8 @@ Commissioned bot by Virux_eSports, with following features requested. <br>
 ➡️ Join to create voice Channel → Wenn jemand in den join_to_create Voice Channel soll ein eigener Temporärer Voice Channel erstellt werden.<br>
 ➡️ Link von Content Creatorn in den 🔔┃social-media-update posten<br>
 ➡️ Ticket Tool <br>
+
+## Using the Bot
+
+<Join to create voice Channel> Dafür muss ein Voice Channel vorhanden sein der, <code>join_for_voice</code> heißt. <br>
+Sobald jemand in den Voice Channel joint, wird in der Selben Kategorie, ein Channel mit dem Tag der Person erstellt. Z.b. https://imgur.com/a/NjrX0q3
