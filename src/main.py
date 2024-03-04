@@ -79,6 +79,7 @@ class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSpo
 
 class SimpleView(discord.ui.View):
     @discord.ui.button(label="apply", style=discord.ButtonStyle.success)
+    # TODO: Nur admins können den button spawnen
     async def hello(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ApplicationModal()
         await interaction.response.send_modal(modal)
@@ -89,7 +90,7 @@ async def button(ctx):
     #view.add_item(button)
     await ctx.send(view=view)
 
-"""
+
 rules_keywords = ["rules", "regeln", "┃regeln", "⚖-rules", ]
 welcome_keyword = ["welcome", "willkommen", "👋🏼｜welcome"]
 
@@ -100,7 +101,7 @@ valorant_keyword = ["📩┃valorant-apply",]
 @bot.event
 async def on_member_join(member: discord.Member):
     # NOTE: ↓↓ TEST SERVER GUILD ID
-    specific_guild = bot.get_guild(1156981897956688033) # WARNING: CHANGE GUILD IT
+    specific_guild = bot.get_guild(862307078282412062) # WARNING: CHANGE GUILD IT
     
     for keyword in rules_keywords:
         rules_channel = discord.utils.get(specific_guild.channels, name=keyword)
@@ -143,9 +144,9 @@ async def on_member_join(member: discord.Member):
             await welcome_channel.send(f"**Error:** *Errorcode 1* Please report this to the maintainer. ") # WARNING: ERROR CODE 1: rules channel doesnt exist or isnt correclty written
             print("rules channel not found in the specified guild.")
     else:
-        print("welcome channel not found in the specified guild. Check channel name, permissions, and asynchronous behavior.")
+        print("welcome channel not found in the specified guild. Check channel name, permissions")
 
-"""
+
 
 # NOTE: join_for_voice 
 
@@ -154,7 +155,7 @@ member_channels = {}
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-    guild = bot.get_guild(1156981897956688033)  # Your guild ID
+    guild = bot.get_guild(862307078282412062)  # Your guild ID
     join_for_voice = discord.utils.get(guild.voice_channels, name="join_for_voice")
 
     # Member joins the join_for_voice channel
