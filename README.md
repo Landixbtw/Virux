@@ -48,7 +48,7 @@ Bewerbung für das Team im Bewerbungschannel<br>
 
 ![Application for the server team in the application channel](./pictures/application_for_team.png)
 
-## How to use Discohook
+## How to use [Discohook](https://discohook.org)
 
 Wie man eine Webhook von Discord bekommt. In den Server Einstellungen folgendes wählen. <br>
 ![getting a Webhook from Discord](./pictures/using_discohook_discord.png)
