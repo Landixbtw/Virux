@@ -4,7 +4,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import logging
-import mariadb
 import sys 
 
 from helpcommand import MyHelp
@@ -44,42 +43,6 @@ class bot(commands.Bot):
             print(f"error: {syncErr}")
         print("-------------------")
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.streaming, name=f"𝙑𝙞𝙧𝙪𝙭 eSports"))
-
-    async def on_guild_join(self, guild):
-    # NOTE: This function is called as soon as the bot joins a server 
-    # this dynamically creates a table. For each guild. Uneccessary here because the Bot is only
-    # deployed on one server but who cares.
-
-        table_prefix =f"guild_{guild.id}"
-
-        cur.execute(
-            f"CREATE TABLE IF NOT EXISTS {table_prefix}_STREAMERS (USERNAME TEXT)"
-        )
-        
-        con.commit()
-    
-    async def on_guild_remove(self, guild):
-        # NOTE: This function is called when the bot is removed from the guild
-        
-        table_prefix = f"guild_{guild.id}"
-
-        cur.execute(f"DROP TABLE IF EXISTS {table_prefix}_STREAMERS")
-
-
-try:
-    con = mariadb.connect(
-        user="ole",
-        password="QrsoL82",
-        host="192.168.10.183",
-        port=3306,
-        database="virux_esports",
-    )
-    
-except mariadb.Error as mariaErr:
-    print(f"Error connecting to MariaDB Platform: {mariaErr}")
-    sys.exit(1)
-
-cur = con.cursor()
 
 bot = bot()
 
