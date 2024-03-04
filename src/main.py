@@ -187,6 +187,8 @@ async def on_member_join(member: discord.Member):
 
 """
 
+# NOTE: join_for_voice 
+
 # Dictionary to store channels created for members
 member_channels = {}
 
