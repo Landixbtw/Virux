@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix='<', intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 # https://gist.github.com/InterStella0/b78488fb28cadf279dfd3164b9f0cf96
 
