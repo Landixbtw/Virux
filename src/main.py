@@ -7,9 +7,6 @@ import logging
 import mariadb
 import sys 
 
-import requests
-import asyncio
-
 from helpcommand import MyHelp
 
 
