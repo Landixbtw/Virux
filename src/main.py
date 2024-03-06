@@ -4,7 +4,6 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import os
 import logging
-import sys 
 
 from helpcommand import MyHelp
 
@@ -21,18 +20,18 @@ class bot(commands.Bot):
         super().__init__(command_prefix="!", intents=discord.Intents.all())
 
  #   bot.load_extension("embed_command")
-
-    # NOTE: This loads only the cogs aka. Slash Commands
-    async def setup_hook(self):
-        print("loading cogs...")
-        for file in os.listdir("./cogs/"):
-            if file.endswith(".py"):
-                try:
-                    name = file[:-3]
-                    await bot.load_extension(f"cogs.{name}")
-                except Exception as cogErr:
-                    print(f"error: {cogErr}")
-    
+    #
+    # # NOTE: This loads only the cogs aka. Slash Commands
+    # async def setup_hook(self):
+    #     print("loading cogs...")
+    #     for file in os.listdir("./cogs/"):
+    #         if file.endswith(".py"):
+    #             try:
+    #                 name = file[:-3]
+    #                 await bot.load_extension(f"cogs.{name}")
+    #             except Exception as cogErr:
+    #                 print(f"error: {cogErr}")
+    # 
     async def on_ready(self):
         print(f"{bot.user.name} is ready to rumble!")
         print("Published by Moritz Henri Reiswaffel III")
@@ -75,10 +74,10 @@ class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSpo
             await interaction.response.send_message("Deine Bewerbung wurde eingereicht, Viel Glück!", ephemeral=True)
         else:
             # In case the 'bewerbungen' channel is not found, send a response to the user
-            await interaction.response.send_message(f"Error: Application Channel could not be found. Please Create a channel called [bewerbungen], or make sure the bot has access to the existin one.")
+            await interaction.response.send_message(f"Error: Application Channel could not be found. Please Create a channel called [bewerbungen], or make sure the bot has access to the existing one.")
 
 class SimpleView(discord.ui.View):
-    @discord.ui.button(label="apply", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="apply", style=discord.ButtonStyle.success, custom_id="apply_button")
     # TODO: Nur admins können den button spawnen
     async def hello(self, interaction: discord.Interaction, button: discord.ui.Button):
         modal = ApplicationModal()
@@ -100,8 +99,7 @@ valorant_keyword = ["📩┃valorant-apply",]
 
 @bot.event
 async def on_member_join(member: discord.Member):
-    # NOTE: ↓↓ TEST SERVER GUILD ID
-    specific_guild = bot.get_guild(862307078282412062) # WARNING: CHANGE GUILD IT
+    specific_guild = bot.get_guild(862307078282412062) # WARNING: REAL GUILD ID 
     
     for keyword in rules_keywords:
         rules_channel = discord.utils.get(specific_guild.channels, name=keyword)
@@ -155,7 +153,7 @@ member_channels = {}
 
 @bot.event
 async def on_voice_state_update(member, before, after):
-    guild = bot.get_guild(862307078282412062)  # Your guild ID
+    guild = bot.get_guild(862307078282412062)  # WARNING: REAL GUILD ID
     join_for_voice = discord.utils.get(guild.voice_channels, name="join_for_voice")
 
     # Member joins the join_for_voice channel
