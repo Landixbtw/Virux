@@ -16,7 +16,7 @@ In den Audit-Logs ist das dann so zu sehen. <br>
 ## Using the Bot - Apply
 
 [Bewerbungssystem]. Für das Bewerbungssystem muss ein Text Channel <code>bewerbungen</code> vorhanden sein. <br>
-Mit <code>!button</code> kann man einen "apply"-button in den Channel schicken lassen in welchem man diesen ausführt. <br>
+In den <code>bewerbungen</code> schickt der Bot die Bewerbungen rein. Mit <code>!button</code> kann man einen "apply"-button in den Channel schicken lassen in welchem man diesen ausführt. <br>
 Sobal jemand das auf den Button Klick popt dieses Menü auf. <br>
 ![Example on how the Apply Modal looks](./pictures/modal_example.png)
 
