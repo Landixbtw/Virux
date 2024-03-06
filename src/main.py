@@ -25,7 +25,7 @@ class bot(commands.Bot):
     # async def setup_hook(self):
     #     print("loading cogs...")
     #     for file in os.listdir("./cogs/"):
-    #         if file.endswith(".py"):
+    #        if file.endswith(".py"):
     #             try:
     #                 name = file[:-3]
     #                 await bot.load_extension(f"cogs.{name}")
@@ -77,6 +77,9 @@ class ApplicationModal(ui.Modal, title="Bewerbung für 𝙑𝙞𝙧𝙪𝙭 eSpo
             await interaction.response.send_message(f"Error: Application Channel could not be found. Please Create a channel called [bewerbungen], or make sure the bot has access to the existing one.")
 
 class SimpleView(discord.ui.View):
+    def __init__(self):
+        super().__init__(timeout=None)
+
     @discord.ui.button(label="apply", style=discord.ButtonStyle.success, custom_id="apply_button")
     # TODO: Nur admins können den button spawnen
     async def hello(self, interaction: discord.Interaction, button: discord.ui.Button):
