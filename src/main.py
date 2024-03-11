@@ -138,7 +138,7 @@ async def on_member_join(member: discord.Member):
     if welcome_channel:
         if rules_channel:
             try:
-                await welcome_channel.send(f"{member.mention} Welcome! \nLies dir bitte die {rules_channel.mention} durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, {fortnite_apply.mention}, {valorant_apply.mention} ")
+                await welcome_channel.send(f"{member.mention} Welcome! \nLies dir bitte die {rules_channel.mention} durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, {fortnite_apply.mention}, {valorant_apply.mention} \n ./Virux_eSports_-_Twitter_Header.jpg")
             except discord.HTTPException as e:
                 print(f"Error sending welcome message: {e}")  # Handle potential errors
         else: 
