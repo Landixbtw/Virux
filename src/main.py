@@ -98,8 +98,8 @@ rules_keywords = ["┃regeln", "rules", "regeln", "⚖-rules", ]
 welcome_keyword = ["👋🏼｜welcome", "welcome", "willkommen",]
 
 fortnite_keyword = ["📩｜fortnite-apply",]
-cod_keyword = ["📩｜fortnite-apply",]
-valorant_keyword = ["📩｜fortnite-apply",]
+cod_keyword = ["📩｜cod-apply",]
+valorant_keyword = ["📩｜valorant-apply",]
 
 @bot.event
 async def on_member_join(member: discord.Member):
