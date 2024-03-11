@@ -1,3 +1,4 @@
+from types import prepare_class
 import discord
 from discord import ui
 from discord.ext import commands
@@ -93,12 +94,12 @@ async def button(ctx):
     await ctx.send(view=view)
 
 
-rules_keywords = ["rules", "regeln", "┃regeln", "⚖-rules", ]
-welcome_keyword = ["welcome", "willkommen", "👋🏼｜welcome"]
+rules_keywords = ["┃regeln", "rules", "regeln", "⚖-rules", ]
+welcome_keyword = ["👋🏼｜welcome", "welcome", "willkommen",]
 
-fortnite_keyword = ["📩┃fortnite-apply",]
-cod_keyword = ["📩┃cod-apply",]
-valorant_keyword = ["📩┃valorant-apply",]
+fortnite_keyword = ["📩｜fortnite-apply",]
+cod_keyword = ["📩｜fortnite-apply",]
+valorant_keyword = ["📩｜fortnite-apply",]
 
 @bot.event
 async def on_member_join(member: discord.Member):
@@ -138,7 +139,10 @@ async def on_member_join(member: discord.Member):
     if welcome_channel:
         if rules_channel:
             try:
-                await welcome_channel.send(f"{member.mention} Welcome! \nLies dir bitte die {rules_channel.mention} durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, {fortnite_apply.mention}, {valorant_apply.mention} \n ./Virux_eSports_-_Twitter_Header.jpg")
+                with open ("./Virux_eSports_-_Twitter_Header.jpg", "rb") as f:
+                    picture = discord.File(f)
+                await welcome_channel.send(f"{member.mention} Welcome! \nLies dir bitte die {rules_channel.mention} durch, wenn du dich bewerben möchtest, dann öffne gerne unser Bewerbungssystem unter, {fortnite_apply.mention}, {valorant_apply.mention}")
+                await welcome_channel.send(file=picture)
             except discord.HTTPException as e:
                 print(f"Error sending welcome message: {e}")  # Handle potential errors
         else: 
